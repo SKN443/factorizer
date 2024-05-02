@@ -93,8 +93,8 @@ class SVDInit(nn.Module):
     def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         u, s, v = self.svd.decompose(x)
         s = torch.sqrt(s)  # FLOPS = R
-        u = torch.einsum("bir, br -> bir", u, s)  # FLOPS = 2MR
-        v = torch.einsum("bjr, br -> bjr", v, s)  # FLOPS = 2NR
+        u = torch.einsum("bcir, br -> bcir", u, s)  # FLOPS = 2MR
+        v = torch.einsum("bcjr, br -> bcjr", v, s)  # FLOPS = 2NR
         return u, v
 
 
